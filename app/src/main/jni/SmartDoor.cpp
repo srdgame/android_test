@@ -8,7 +8,7 @@
 #include "json_util.h"
 
 #include "android/log.h"
-static const char *TAG="SmartDoor";
+static const char *TAG="SmartDoor[JNI]";
 #define LOGI(fmt, args...) __android_log_print(ANDROID_LOG_INFO,  TAG, fmt, ##args)
 #define LOGD(fmt, args...) __android_log_print(ANDROID_LOG_DEBUG, TAG, fmt, ##args)
 #define LOGE(fmt, args...) __android_log_print(ANDROID_LOG_ERROR, TAG, fmt, ##args)
@@ -85,7 +85,7 @@ void split(std::string& s, const std::string& delim,std::list< std::string >* re
 CardList SmartDoor::JsonToCards(const std::string &jstr) {
     CardList list;
 
-    std::string sub = jstr.substr(jstr.find('[') + 1, jstr.rfind(']'));
+    std::string sub = jstr.substr(jstr.find('[') + 1, jstr.rfind(']') - 1);
     LOGD("Sub: %s", sub.c_str());
     split(sub, ",", &list);
 
