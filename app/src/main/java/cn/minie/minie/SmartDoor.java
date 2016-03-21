@@ -7,18 +7,18 @@ import android.util.Log;
  */
 public class SmartDoor {
     private final SmartDoorCallbacks callbacks;
-
-    public SmartDoor(SmartDoorCallbacks calllbacks) {
-        callbacks = calllbacks;
-    }
     private static final String TAG = "SmartDoor";
 
     static {
         System.loadLibrary("minie");
     }
 
+    public SmartDoor(SmartDoorCallbacks calllbacks) {
+        callbacks = calllbacks;
+    }
+
     public native String version();
-    public native int init();
+    public native int init(String tty, int baudrate, int flags);
     public native String getCards();
     public native int setCards(String cards);
     public native int addCard(String id);
@@ -35,17 +35,17 @@ public class SmartDoor {
         Log.d(TAG, "onClose: Test!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
         callbacks.onClose();
     }
-    protected void onPunch(String card) {
+    protected void onPunch(String card, int err) {
         Log.d(TAG, "onPunch: Test!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-        callbacks.onPunch(card);
+        callbacks.onPunch(card, err);
     }
-    protected boolean onCode(String code) {
+    protected boolean onCode(int code) {
         Log.d(TAG, "onCode: Test!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
         return callbacks.onCode(code);
     }
     protected boolean checkCard(String card) {
         Log.d(TAG, "checkCard: Called with card" + card);
-        return callbacks.onCode(card);
+        return callbacks.checkCard(card);
     }
     protected String onTest(String test) {
         return test + "onTest";

@@ -48,7 +48,7 @@ public class MiniE extends AppCompatActivity implements SmartDoorCallbacks {
         String ttt = door.tests();
         btn.setText(door.version());
         door.Start();
-        door.init();
+        door.init("/dev/ttyS1", 9600, 0);
         String tex = door.getCards();
         EditText editText = (EditText)findViewById(R.id.editText);
         editText.setText(tex);
@@ -103,10 +103,10 @@ public class MiniE extends AppCompatActivity implements SmartDoorCallbacks {
     public void onClose() {
 
     }
-    public void onPunch(String card) {
+    public void onPunch(String card, int err) {
 
     }
-    public boolean onCode(String code) {
+    public boolean onCode(int code) {
         return false;
     }
     public boolean checkCard(String card) {

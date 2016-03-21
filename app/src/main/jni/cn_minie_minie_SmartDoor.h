@@ -18,10 +18,10 @@ JNIEXPORT jstring JNICALL Java_cn_minie_minie_SmartDoor_version
 /*
  * Class:     cn_minie_minie_SmartDoor
  * Method:    init
- * Signature: ()I
+ * Signature: (Ljava/lang/String;II)I
  */
 JNIEXPORT jint JNICALL Java_cn_minie_minie_SmartDoor_init
-  (JNIEnv *, jobject);
+  (JNIEnv *, jobject, jstring, jint, jint);
 
 /*
  * Class:     cn_minie_minie_SmartDoor

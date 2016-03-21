@@ -14,18 +14,19 @@ typedef std::list<CardIdentifer> CardList;
 
 class SmartDoor {
 public:
+    static std::string CardsToJson(CardList);
+    static CardList JsonToCards(const std::string& jstr);
+public:
     SmartDoor();
     virtual ~SmartDoor();
 
-public:
     int open(const std::string& path, int baudrate, int flags);
     void close();
 
     CardList getCards();
     int setCards(CardList list);
     int clearCards();
-    static std::string CardsToJson(CardList);
-    CardList JsonToCards(const std::string& jstr);
+
 
     int addCard(CardIdentifer card);
     int removeCard(CardIdentifer card);
