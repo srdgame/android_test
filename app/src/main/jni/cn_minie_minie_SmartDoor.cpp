@@ -159,11 +159,7 @@ void Java_cn_minie_minie_SmartDoor_Run(JNIEnv *env, jobject thiz) {
     if (door)
     {
         SmartDoorCallbacks cb(env, thiz);
-        cb.onInit(99);
-        cb.onClose();
-        cb.checkCard("CheckCard No.1");
-        cb.onCode(999);
-        cb.onPunch("PunchedCard No.1", 99);
+        door->run(cb);
         // Read information.
     }
     else

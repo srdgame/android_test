@@ -6,7 +6,6 @@
 #define MINIE_SMARTDOORCALLBACKS_H
 
 #include <jni.h>
-#include "SmartDoor.h"
 
 
 class SmartDoorCallbacks {
@@ -17,9 +16,9 @@ public:
 public:
     void onInit(int code);
     void onClose();
-    void onPunch(CardIdentifer card, int err);
+    void onPunch(const char* card, int err);
     bool onCode(int code);
-    bool checkCard(CardIdentifer card);
+    bool checkCard(const char* card);
 private:
     jmethodID GetMethodID(const char* name, const char* sig);
 private:

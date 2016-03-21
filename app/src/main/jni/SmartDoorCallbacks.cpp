@@ -26,10 +26,10 @@ void SmartDoorCallbacks::onClose() {
     }
 }
 
-void SmartDoorCallbacks::onPunch(CardIdentifer card, int err) {
+void SmartDoorCallbacks::onPunch(const char* card, int err) {
     jmethodID method = GetMethodID("onPunch", "(Ljava/lang/String;I)V");
     if (method != 0) {
-        jstring jstr = _env->NewStringUTF(card.c_str());
+        jstring jstr = _env->NewStringUTF(card);
         _env->CallVoidMethod(_thiz, method, jstr, err);
     }
 }
@@ -43,11 +43,11 @@ bool SmartDoorCallbacks::onCode(int code) {
     return false;
 }
 
-bool SmartDoorCallbacks::checkCard(CardIdentifer card) {
+bool SmartDoorCallbacks::checkCard(const char* card) {
 
     jmethodID method = GetMethodID("checkCard", "(Ljava/lang/String;)Z");
     if (method != 0) {
-        jstring jstr = _env->NewStringUTF(card.c_str());
+        jstring jstr = _env->NewStringUTF(card);
         return _env->CallBooleanMethod(_thiz, method, jstr);
     }
     return false;

@@ -8,10 +8,12 @@
 
 #include <string>
 #include <list>
+#include "SmartDoorCallbacks.h"
 
 typedef std::string CardIdentifer;
 typedef std::list<CardIdentifer> CardList;
 
+class SmartDoorCallbacks;
 class SmartDoor {
 public:
     static std::string CardsToJson(CardList);
@@ -31,7 +33,9 @@ public:
     int addCard(CardIdentifer card);
     int removeCard(CardIdentifer card);
 
+    void run(SmartDoorCallbacks& cb);
+private:
+    int _fd;
 };
-
 
 #endif //MINIE_SMARTDOOR_H
