@@ -21,7 +21,7 @@ public:
     bool onCode(int code);
     bool checkCard(CardIdentifer card);
 private:
-    jmethodID GetMethodID(const char* name, const char* sign);
+    jmethodID GetMethodID(const char* name, const char* sig);
 private:
     JNIEnv* _env;
     jobject _thiz;

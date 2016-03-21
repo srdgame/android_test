@@ -1,0 +1,13 @@
+//
+// Created by cch on 16-3-21.
+//
+
+#ifndef MINIE_ERROR_CODES_H
+#define MINIE_ERROR_CODES_H
+
+#define RC_OK 0
+#define RC_ERROR_BASE_NUM 10000
+#define RC_NOT_INITIALIZED RC_ERROR_BASE_NUM + 1
+#define RC_ALREADY_INITIALIZED RC_ERROR_BASE_NUM + 2
+
+#endif //MINIE_ERROR_CODES_H

@@ -53,9 +53,7 @@ bool SmartDoorCallbacks::checkCard(CardIdentifer card) {
     return false;
 }
 
-jmethodID SmartDoorCallbacks::GetMethodID(const char *name, const char *sign) {
+jmethodID SmartDoorCallbacks::GetMethodID(const char *name, const char *sig) {
     jclass thiz_class = _env->GetObjectClass(_thiz);
-    jstring jstr = _env->NewStringUTF("TestString");
-
-    return _env->GetMethodID(thiz_class, "onPunch", "(Ljava/lang/String;I)V");
+    return _env->GetMethodID(thiz_class, name, sig);
 }

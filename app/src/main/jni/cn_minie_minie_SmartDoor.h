@@ -25,6 +25,14 @@ JNIEXPORT jint JNICALL Java_cn_minie_minie_SmartDoor_init
 
 /*
  * Class:     cn_minie_minie_SmartDoor
+ * Method:    destroy
+ * Signature: ()V
+ */
+JNIEXPORT void JNICALL Java_cn_minie_minie_SmartDoor_destroy
+  (JNIEnv *, jobject);
+
+/*
+ * Class:     cn_minie_minie_SmartDoor
  * Method:    getCards
  * Signature: ()Ljava/lang/String;
  */
@@ -38,6 +46,14 @@ JNIEXPORT jstring JNICALL Java_cn_minie_minie_SmartDoor_getCards
  */
 JNIEXPORT jint JNICALL Java_cn_minie_minie_SmartDoor_setCards
   (JNIEnv *, jobject, jstring);
+
+/*
+ * Class:     cn_minie_minie_SmartDoor
+ * Method:    clearCards
+ * Signature: ()I
+ */
+JNIEXPORT jint JNICALL Java_cn_minie_minie_SmartDoor_clearCards
+  (JNIEnv *, jobject);
 
 /*
  * Class:     cn_minie_minie_SmartDoor

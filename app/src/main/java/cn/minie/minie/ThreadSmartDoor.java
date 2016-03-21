@@ -18,11 +18,12 @@ public class ThreadSmartDoor extends SmartDoor {
     public void Stop() {
         if (mReadThread != null)
             mReadThread.interrupt();
+        mReadThread = null;
     }
 
     private ReadThread mReadThread;
     private class ReadThread extends Thread {
-        private ThreadSmartDoor mdoor;
+        private final ThreadSmartDoor mdoor;
         ReadThread(ThreadSmartDoor door) {
             mdoor = door;
         }

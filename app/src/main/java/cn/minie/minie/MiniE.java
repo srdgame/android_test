@@ -47,24 +47,27 @@ public class MiniE extends AppCompatActivity implements SmartDoorCallbacks {
 
         String ttt = door.tests();
         btn.setText(door.version());
-        door.Start();
-        door.init("/dev/ttyS1", 9600, 0);
-        String tex = door.getCards();
-        EditText editText = (EditText)findViewById(R.id.editText);
-        editText.setText(tex);
-        try {
-            JSONTokener jsonParser = new JSONTokener(tex);
-            JSONArray cards = (JSONArray) jsonParser.nextValue();
-            for (int i = 0; i < cards.length(); i++){
-                Log.d(TAG, "Get Card: " + cards.getString(i));
+        int r = door.init("/dev/ttyS1", 9600, 0);
+        if (r == 0) {
+            Log.d(TAG, "Door connection initialized!");
+
+            door.Start();
+            String tex = door.getCards();
+            EditText editText = (EditText) findViewById(R.id.editText);
+            editText.setText(tex);
+            try {
+                JSONTokener jsonParser = new JSONTokener(tex);
+                JSONArray cards = (JSONArray) jsonParser.nextValue();
+                for (int i = 0; i < cards.length(); i++) {
+                    Log.d(TAG, "Get Card: " + cards.getString(i));
+                }
+
+                int n = door.setCards(tex);
+                Log.d(TAG, "Finished setCards returns " + n);
+            } catch (Exception e) {
+                e.printStackTrace();
+
             }
-
-            int n = door.setCards(tex);
-            Log.d(TAG, "Finished setCards returns " + n);
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-
         }
 
     }
@@ -98,18 +101,24 @@ public class MiniE extends AppCompatActivity implements SmartDoorCallbacks {
     }
 
     public void onInit(int code) {
-
+        Log.d(TAG, "onInit: " + code);
     }
     public void onClose() {
+        Log.d(TAG, "onClose: ");
 
     }
     public void onPunch(String card, int err) {
+        Log.d(TAG, "onPunch: " + card + " " + err);
 
     }
     public boolean onCode(int code) {
+        Log.d(TAG, "onCode: " + code);
+
         return false;
     }
     public boolean checkCard(String card) {
+
+        Log.d(TAG, "checkCard: " + card);
         return false;
     }
 }

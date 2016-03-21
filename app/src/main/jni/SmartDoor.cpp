@@ -8,6 +8,8 @@
 #include "json_util.h"
 
 #include "android/log.h"
+#include "error_codes.h"
+
 static const char *TAG="SmartDoor[JNI]";
 #define LOGI(fmt, args...) __android_log_print(ANDROID_LOG_INFO,  TAG, fmt, ##args)
 #define LOGD(fmt, args...) __android_log_print(ANDROID_LOG_DEBUG, TAG, fmt, ##args)
@@ -22,7 +24,8 @@ SmartDoor::~SmartDoor() {
 }
 
 int SmartDoor::open(const std::string &path, int baudrate, int flags) {
-    return 0;
+    LOGI("%s : Open port with baudrate %d, flags %d", __FUNCTION__, baudrate, flags);
+    return RC_OK;
 }
 
 void SmartDoor::close() {
@@ -38,19 +41,19 @@ CardList SmartDoor::getCards() {
 }
 
 int SmartDoor::setCards(CardList list) {
-    return 0;
+    return RC_OK;
 }
 
 int SmartDoor::clearCards() {
-    return 0;
+    return RC_OK;
 }
 
 int SmartDoor::addCard(CardIdentifer card) {
-    return 0;
+    return RC_OK;
 }
 
 int SmartDoor::removeCard(CardIdentifer card) {
-    return 0;
+    return RC_OK;
 }
 
 std::string SmartDoor::CardsToJson(CardList list) {
@@ -67,6 +70,7 @@ std::string SmartDoor::CardsToJson(CardList list) {
     ss << "]";
     return ss.str();
 }
+
 void split(std::string& s, const std::string& delim,std::list< std::string >* ret)
 {
     size_t last = 0;
@@ -82,6 +86,7 @@ void split(std::string& s, const std::string& delim,std::list< std::string >* re
         ret->push_back(s.substr(last,index-last));
     }
 }
+
 CardList SmartDoor::JsonToCards(const std::string &jstr) {
     CardList list;
 
