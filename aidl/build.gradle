@@ -1,20 +1,14 @@
-apply plugin: 'com.android.application'
+apply plugin: 'com.android.library'
 
 android {
     compileSdkVersion 23
-    buildToolsVersion '24.0.0 rc2'
+    buildToolsVersion "24.0.0 rc2"
+
     defaultConfig {
-        applicationId "cn.minie.minie"
         minSdkVersion 19
         targetSdkVersion 23
         versionCode 1
         versionName "1.0"
-        ndk {
-            moduleName "minie"
-            cFlags "-std=c++11"
-            stl "gnustl_static"
-            ldLibs "log"
-        }
     }
     buildTypes {
         release {
@@ -22,15 +16,10 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
-    productFlavors {
-    }
 }
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     testCompile 'junit:junit:4.12'
-    compile project(':aidl')
     compile 'com.android.support:appcompat-v7:23.3.0'
-    compile 'com.android.support:design:23.3.0'
-    compile 'com.android.support:support-v4:23.3.0'
 }

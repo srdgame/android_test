@@ -9,8 +9,8 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="cn.minie.minie.MiniE"
-    tools:showIn="@layout/activity_mini_e">
+    tools:context="cn.minie.minie.TestPage"
+    tools:showIn="@layout/activity_test_page">
 
     <TextView
         android:layout_width="wrap_content"
