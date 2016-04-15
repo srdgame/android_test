@@ -1,203 +1,66 @@
 package cn.minie.minie;
 
-import android.content.ComponentName;
-import android.content.Context;
+import android.app.Activity;
 import android.content.Intent;
-import android.content.ServiceConnection;
+import android.os.Build;
 import android.os.Bundle;
-import android.os.Environment;
-import android.os.Handler;
-import android.os.IBinder;
-import android.os.Message;
-import android.os.Messenger;
-import android.os.RemoteException;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.TextView;
 
-import org.json.JSONArray;
-import org.json.JSONTokener;
-
-import cn.minie.aidl.IAppMgrInterface;
-
-
-public class MiniE extends AppCompatActivity implements SmartDoorCallbacks {
-    private static final String TAG = "MiniEMainActivity";
-    private ThreadSmartDoor door;
-
-    IAppMgrInterface mService;
-    private ServiceConnection mConnection = new ServiceConnection() {
-        @Override
-        public void onServiceConnected(ComponentName name, IBinder service) {
-            mService = IAppMgrInterface.Stub.asInterface(service);
-        }
-
-        @Override
-        public void onServiceDisconnected(ComponentName name) {
-            mService = null;
-        }
-    };
+public class MiniE extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mini_e);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
-        Button btn = (Button) findViewById(R.id.button);
-        door = new ThreadSmartDoor(this);
-
-        btn.setText(door.version());
-        btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                try {
-                    String ttt = door.tests();
-                    TextView log = (TextView) findViewById(R.id.textLog);
-                    log.append(ttt);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-
-        int r = door.init("/dev/ttyS1", 9600, 0);
-        if (r == 0) {
-            Log.d(TAG, "Door connection initialized!");
-
-            door.Start();
-            String tex = door.getCards();
-            TextView log = (TextView) findViewById(R.id.textLog);
-            log.append(tex);
-            try {
-                JSONTokener jsonParser = new JSONTokener(tex);
-                JSONArray cards = (JSONArray) jsonParser.nextValue();
-                for (int i = 0; i < cards.length(); i++) {
-                    Log.d(TAG, "Get Card: " + cards.getString(i));
-                }
-
-                int n = door.setCards(tex);
-                Log.d(TAG, "Finished setCards returns " + n);
-            } catch (Exception e) {
-                e.printStackTrace();
-
-            }
-        }
-
-        Button btnInstall = (Button) findViewById(R.id.btnInstall);
-        btnInstall.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                try {
-                    //String fp = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS) + "/test.apk";
-                    String fp = "/sdcard/Download/test.apk";
-                    int result = mService.Install(fp);
-                    result = result + 100;
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-        Button btnLauch = (Button) findViewById(R.id.btnLaunch);
-        btnLauch.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                try {
-                    String pn = "com.tortoisekungfu.shoudiantong";
-                    String an = "com.tortoisekungfu.shoudiantong.MainActivity";
-                    int result = mService.Start(pn, an);
-//                    Intent intent = new Intent(Intent.ACTION_MAIN);
-//                    intent.setComponent(new ComponentName(pn,an));
-//                    startActivity(intent);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-    }
-    @Override
-    protected void onStart() {
-        super.onStart();
-        Intent i = new Intent("cn.minie.daemon.AppMgr");
-        i.setPackage("cn.minie.daemon");
-        bindService(i, mConnection, Context.BIND_AUTO_CREATE);
+        hideNavBar();
+        hideSoftKeyboard();
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_mini_e, menu);
-        return true;
+    public void onWindowFocusChanged(boolean hasFocus) {
+        super.onWindowFocusChanged(hasFocus);
+        hideNavBar();
+        hideSoftKeyboard();
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
+    public void showTests(View v){
+        Intent i = new Intent(this, TestPage.class);
+        startActivity(i);
     }
 
-    @Override
-    protected void onStop() {
-        super.onStop();
-        if (mService != null) {
-            unbindService(mConnection);
+    public void showApps(View v){
+//        Intent i = new Intent(this, AppsListActivity.class);
+//        startActivity(i);
+    }
+    private void hideNavBar() {
+        if (Build.VERSION.SDK_INT >= 19) {
+            View v = getWindow().getDecorView();
+            v.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                    | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                    | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                    | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                    | View.SYSTEM_UI_FLAG_FULLSCREEN
+                    | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
         }
     }
-    @Override
-    protected void onDestroy() {
-        door.Stop();
-        super.onDestroy();
+    /**
+     * Hides the soft keyboard
+     */
+    public void hideSoftKeyboard() {
+        if(getCurrentFocus()!=null) {
+            InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+            inputMethodManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
+        }
     }
 
     /**
-     *
-     * @param code
+     * Shows the soft keyboard
      */
-    public void onInit(int code) {
-        Log.d(TAG, "onInit: " + code);
-    }
-    public void onClose() {
-        Log.d(TAG, "onClose: ");
-
-    }
-    public void onPunch(String card, int err) {
-        Log.d(TAG, "onPunch: " + card + " " + err);
-
-    }
-    public boolean onCode(int code) {
-        Log.d(TAG, "onCode: " + code);
-
-        return false;
-    }
-    public boolean checkCard(String card) {
-
-        Log.d(TAG, "checkCard: " + card);
-        return false;
+    public void showSoftKeyboard(View view) {
+        InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+        view.requestFocus();
+        inputMethodManager.showSoftInput(view, 0);
     }
 }

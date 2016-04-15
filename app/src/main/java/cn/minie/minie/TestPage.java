@@ -26,6 +26,7 @@ public class TestPage extends AppCompatActivity implements SmartDoorCallbacks {
 
     private static final String TAG = "MiniETestPageActivity";
     private ThreadSmartDoor door;
+    private UpdateManager mUpdateManager;
 
     IAppMgrInterface mService;
     private ServiceConnection mConnection = new ServiceConnection() {
@@ -55,22 +56,12 @@ public class TestPage extends AppCompatActivity implements SmartDoorCallbacks {
                         .setAction("Action", null).show();
             }
         });
-        Button btn = (Button) findViewById(R.id.button);
+
+        mUpdateManager = new UpdateManager(this);
         door = new ThreadSmartDoor(this);
 
+        Button btn = (Button) findViewById(R.id.btnText);
         btn.setText(door.version());
-        btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                try {
-                    String ttt = door.tests();
-                    TextView log = (TextView) findViewById(R.id.textLog);
-                    log.append(ttt);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        });
 
         int r = door.init("/dev/ttyS1", 9600, 0);
         if (r == 0) {
@@ -79,52 +70,23 @@ public class TestPage extends AppCompatActivity implements SmartDoorCallbacks {
             door.Start();
             String tex = door.getCards();
             TextView log = (TextView) findViewById(R.id.textLog);
-            log.append(tex);
+            log.append("Cards JSON:" + tex);
             try {
                 JSONTokener jsonParser = new JSONTokener(tex);
                 JSONArray cards = (JSONArray) jsonParser.nextValue();
                 for (int i = 0; i < cards.length(); i++) {
                     Log.d(TAG, "Get Card: " + cards.getString(i));
+                    log.append("Get Card: " + cards.getString(i));
                 }
 
                 int n = door.setCards(tex);
                 Log.d(TAG, "Finished setCards returns " + n);
+                log.append("Finished setCards returns " + n);
             } catch (Exception e) {
                 e.printStackTrace();
 
             }
         }
-
-        Button btnInstall = (Button) findViewById(R.id.btnInstall);
-        btnInstall.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                try {
-                    //String fp = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS) + "/test.apk";
-                    String fp = "/sdcard/Download/test.apk";
-                    int result = mService.Install(fp);
-                    result = result + 100;
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-        Button btnLauch = (Button) findViewById(R.id.btnLaunch);
-        btnLauch.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                try {
-                    String pn = "com.tortoisekungfu.shoudiantong";
-                    String an = "com.tortoisekungfu.shoudiantong.MainActivity";
-                    int result = mService.Start(pn, an);
-//                    Intent intent = new Intent(Intent.ACTION_MAIN);
-//                    intent.setComponent(new ComponentName(pn,an));
-//                    startActivity(intent);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        });
     }
     @Override
     protected void onStart() {
@@ -170,7 +132,54 @@ public class TestPage extends AppCompatActivity implements SmartDoorCallbacks {
     }
 
     /**
-     *
+     * Controls handlers
+     */
+
+    /**
+     * Test Button click
+     * @param v
+     */
+    public void onTestJNI(View v){
+        try {
+            String ttt = door.tests();
+            TextView log = (TextView) findViewById(R.id.textLog);
+            log.append(ttt);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    public void onDaemonInstall(View v){
+        try {
+            //String fp = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS) + "/test.apk";
+            String fp = "/sdcard/Download/test.apk";
+            int result = mService.Install(fp);
+            result = result + 100;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    public void onDaemonLaunch(View v){
+        try {
+            String pn = "com.tortoisekungfu.shoudiantong";
+            String an = "com.tortoisekungfu.shoudiantong.MainActivity";
+            int result = mService.Start(pn, an);
+//                    Intent intent = new Intent(Intent.ACTION_MAIN);
+//                    intent.setComponent(new ComponentName(pn,an));
+//                    startActivity(intent);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    public void onTestUpdate(View v){
+        try {
+            mUpdateManager.DownloadApk("http://172.16.2.38:8080/static/test.apk", "test.apk");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Implement the SmartDoorCallbacks
      * @param code
      */
     public void onInit(int code) {
