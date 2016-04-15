@@ -170,9 +170,18 @@ public class TestPage extends AppCompatActivity implements SmartDoorCallbacks {
             e.printStackTrace();
         }
     }
+    public void onDaemonRemoteInstall(View v) {
+        try {
+            int result = mService.InstallRemote("http://172.16.2.38:8081/test.apk");
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     public void onTestUpdate(View v){
         try {
-            mUpdateManager.DownloadApk("http://172.16.2.38:8080/static/test.apk", "test.apk");
+            mUpdateManager.DownloadApk("http://172.16.2.38:8081/test.apk", "test.apk");
         } catch (Exception e) {
             e.printStackTrace();
         }

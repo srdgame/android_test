@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
+import android.widget.ListView;
+import android.widget.TextView;
 
 public class MiniE extends Activity {
 
@@ -33,6 +35,37 @@ public class MiniE extends Activity {
     public void showApps(View v){
 //        Intent i = new Intent(this, AppsListActivity.class);
 //        startActivity(i);
+    }
+
+    public void onDialInput(View v) {
+        TextView input = (TextView) findViewById(R.id.dialInput);
+
+        String tag = (String)v.getTag();
+        if (tag.length() == 1) {
+            input.append(tag);
+        }
+        if (tag.equals("call")) {
+            input.setText("");
+            input.setHint(getResources().getString(R.string.calling));
+        }
+        if (tag.equals("back")) {
+            String inputText = input.getText().toString();
+            if (inputText.length() == 1) {
+                input.setHint(getResources().getString(R.string.input_room_number));
+            }
+
+            if (inputText.length() > 0) {
+                input.setText(inputText.substring(0, inputText.length() - 1));
+            }
+        }
+        if (tag.equals("clear")) {
+            input.setText("");
+            input.setHint(getResources().getString(R.string.input_room_number));
+        }
+        String inputText = input.getText().toString();
+        if (inputText.length() != 0) {
+            ListView pList = (ListView) findViewById(R.id.personList);
+        }
     }
     private void hideNavBar() {
         if (Build.VERSION.SDK_INT >= 19) {

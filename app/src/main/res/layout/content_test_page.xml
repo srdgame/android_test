@@ -35,6 +35,15 @@
                 android:onClick="onDaemonInstall"
                 android:layout_weight="1">
             </Button>
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Install Remote"
+                android:onClick="onDaemonRemoteInstall"
+                android:layout_weight="1">
+            </Button>
+
             <Button
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -42,7 +51,6 @@
                 android:onClick="onDaemonLaunch"
                 android:layout_weight="1">
             </Button>
-
 
             <Button
                 android:layout_width="match_parent"

@@ -1,4 +1,4 @@
-<LinearLayout  xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
@@ -59,27 +59,27 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1">
-            // 这里第一行显示标签为一个水平布局
+            <!-- 这里第一行显示标签为一个水平布局 -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal" >
                 <TextView
                     style="@style/MyDialTextViewTheme"
-                    android:id="@+id/msg"
+                    android:id="@+id/dialInput"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textAlignment="center"
-                    android:text="1122">
+                    android:hint="@string/input_room_number">
                 </TextView>
             </LinearLayout>
 
 
-            // 最外层是一个水平布局，由左边上面一行1 2 3三个Button,下面一行的0 . 两个Button 和 右边的=构成
+            <!-- 最外层是一个水平布局，由左边上面一行1 2 3三个Button,下面一行的0 . 两个Button 和 右边的=构成 -->
             <LinearLayout android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
-                // 这里 1 2 3 和 下面的 0 . 构成一个垂直布局
+                <!-- 这里 1 2 3 和 下面的 0 . 构成一个垂直布局 -->
                 <LinearLayout android:orientation="vertical"
                     android:layout_weight="3"
                     android:layout_width="wrap_content"
@@ -92,17 +92,26 @@
                         <Button
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="7" android:layout_weight="1">
+                            android:text="@string/_7"
+                            android:tag="7"
+                            android:onClick="onDialInput"
+                            android:layout_weight="1">
                         </Button>
                         <Button
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="8" android:layout_weight="1">
+                            android:text="@string/_8"
+                            android:tag="8"
+                            android:onClick="onDialInput"
+                            android:layout_weight="1">
                         </Button>
                         <Button
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="9" android:layout_weight="1">
+                            android:text="@string/_9"
+                            android:tag="9"
+                            android:onClick="onDialInput"
+                            android:layout_weight="1">
                         </Button>
 
                     </LinearLayout>
@@ -116,24 +125,30 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="4" >
+                            android:tag="4"
+                            android:text="@string/_4"
+                            android:onClick="onDialInput" >
                         </Button>
                         <Button
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="5" >
+                            android:tag="5"
+                            android:text="@string/_5"
+                            android:onClick="onDialInput" >
                         </Button>
                         <Button
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="6" >
+                            android:tag="6"
+                            android:text="@string/_6"
+                            android:onClick="onDialInput" >
                         </Button>
 
                     </LinearLayout>
 
-                    // 这里的 1 2 3 构成一个水平布局
+                    <!--  这里的 1 2 3 构成一个水平布局 -->
                     <LinearLayout android:orientation="horizontal"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
@@ -141,19 +156,28 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="1"></Button>
+                            android:tag="1"
+                            android:text="@string/_1"
+                            android:onClick="onDialInput" >
+                        </Button>
                         <Button
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="2"></Button>
+                            android:tag = "2"
+                            android:text="@string/_2"
+                            android:onClick="onDialInput" >
+                        </Button>
                         <Button
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="3"></Button>
+                            android:tag = "3"
+                            android:text="@string/_3"
+                            android:onClick="onDialInput">
+                        </Button>
                     </LinearLayout>
-                    // 这里的 0 和 . 构成一个水平布局，注意这里的android_weight参数设置
+                    <!--  这里的 0 和 . 构成一个水平布局，注意这里的android_weight参数设置 -->
                     <LinearLayout android:orientation="horizontal"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
@@ -161,15 +185,21 @@
                             android:layout_width="0px"
                             android:layout_height="wrap_content"
                             android:layout_weight="2"
-                            android:text="0"></Button>
+                            android:tag = "0"
+                            android:text="@string/_0"
+                            android:onClick="onDialInput">
+                        </Button>
                         <Button
                             android:layout_width="0px"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="*"></Button>
+                            android:tag = "star"
+                            android:text="@string/Star"
+                            android:onClick="onDialInput">
+                        </Button>
                     </LinearLayout>
                 </LinearLayout>
-                // 这里一个单独Button构成的垂直布局
+                <!-- 这里一个单独Button构成的垂直布局 -->
                 <LinearLayout android:orientation="vertical"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
@@ -177,19 +207,31 @@
                     <Button
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="清除">
+                        android:tag = "clear"
+                        android:text="@string/Clear"
+                        android:onClick="onDialInput">
                     </Button>
                     <Button
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="回退" >
+                        android:tag = "back"
+                        android:text="@string/Back"
+                        android:onClick="onDialInput" >
                     </Button>
                     <Button
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:text="呼叫"></Button>
+                        android:tag = "call"
+                        android:text="@string/Call"
+                        android:onClick="onDialInput">
+                    </Button>
                 </LinearLayout>
             </LinearLayout>
+
+            <ListView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/personList" />
         </LinearLayout>
 
     </LinearLayout>
@@ -209,7 +251,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="10dp"
-                android:text="Show Tests"
+                android:text="@string/show_tests"
                 android:onClick="showTests"
                 android:layout_row="0"
                 android:layout_column="0" />

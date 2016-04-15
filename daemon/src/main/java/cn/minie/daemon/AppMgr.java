@@ -15,8 +15,17 @@ public class AppMgr extends Service {
     }
 
     private Handler mHandler = new Handler();
+    private UpdateManager mUpdateManager = new UpdateManager(this);
 
     private IAppMgrInterface.Stub mBinder = new IAppMgrInterface.Stub() {
+        @Override
+        public int InstallRemote(String apkUrl) throws RemoteException {
+            String apkFile = apkUrl.substring(apkUrl.lastIndexOf("/"));
+            if (apkFile.isEmpty())
+                return -100;
+            return mUpdateManager.DownloadApk(apkUrl, apkFile);
+        }
+
         @Override
         public int Install(final String apkPath) throws RemoteException {
 //            mHandler.post(new Runnable() {
@@ -33,6 +42,7 @@ public class AppMgr extends Service {
             InstallApk.startApk(packageName, activityName);
             return 0;
         }
+
     };
     @Override
     public IBinder onBind(Intent intent) {
