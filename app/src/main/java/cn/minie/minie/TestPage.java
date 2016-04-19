@@ -63,7 +63,7 @@ public class TestPage extends AppCompatActivity implements SmartDoorCallbacks {
         Button btn = (Button) findViewById(R.id.btnText);
         btn.setText(door.version());
 
-        int r = door.init("/dev/ttyS1", 9600, 0);
+        int r = door.init("/dev/ttySAC1", 9600, 0);
         if (r == 0) {
             Log.d(TAG, "Door connection initialized!");
 
@@ -192,24 +192,24 @@ public class TestPage extends AppCompatActivity implements SmartDoorCallbacks {
      * @param code
      */
     public void onInit(int code) {
-        Log.d(TAG, "onInit: " + code);
+       // Log.d(TAG, "onInit: " + code);
     }
     public void onClose() {
-        Log.d(TAG, "onClose: ");
+       // Log.d(TAG, "onClose: ");
 
     }
     public void onPunch(String card, int err) {
-        Log.d(TAG, "onPunch: " + card + " " + err);
+       // Log.d(TAG, "onPunch: " + card + " " + err);
 
     }
     public boolean onCode(int code) {
-        Log.d(TAG, "onCode: " + code);
+       // Log.d(TAG, "onCode: " + code);
 
         return false;
     }
     public boolean checkCard(String card) {
 
-        Log.d(TAG, "checkCard: " + card);
+      //  Log.d(TAG, "checkCard: " + card);
         return false;
     }
 }

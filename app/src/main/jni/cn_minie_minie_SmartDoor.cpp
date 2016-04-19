@@ -167,5 +167,5 @@ void Java_cn_minie_minie_SmartDoor_Run(JNIEnv *env, jobject thiz) {
         LOGE("%s Error: Cannot find Door object from jobject %ld", __FUNCTION__, (long)thiz);
     }
 
-    sleep(1);
+    //sleep(1);
 }
