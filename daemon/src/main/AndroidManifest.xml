@@ -44,13 +44,8 @@
 
         <service
             android:name=".RemoteMonitor"
-            android:exported="false">
-            <intent-filter>
-                <action android:name="cn.minie.daemon.RemoteMonitor"/>
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </service>
+            android:enabled="true"
+            android:exported="true"></service>
     </application>
 
 </manifest>
