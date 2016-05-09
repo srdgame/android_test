@@ -6,6 +6,7 @@
       <module fileurl="file://$PROJECT_DIR$/aidl/aidl.iml" filepath="$PROJECT_DIR$/aidl/aidl.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/daemon/daemon.iml" filepath="$PROJECT_DIR$/daemon/daemon.iml" />
+      <module fileurl="file://$PROJECT_DIR$/irpc/irpc.iml" filepath="$PROJECT_DIR$/irpc/irpc.iml" />
     </modules>
   </component>
 </project>

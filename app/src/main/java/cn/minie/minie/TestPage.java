@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.IBinder;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -21,6 +22,7 @@ import org.json.JSONArray;
 import org.json.JSONTokener;
 
 import cn.minie.aidl.IAppMgrInterface;
+import minie.irpc.minie_app_client;
 
 public class TestPage extends AppCompatActivity implements SmartDoorCallbacks {
 
@@ -86,6 +88,18 @@ public class TestPage extends AppCompatActivity implements SmartDoorCallbacks {
                 e.printStackTrace();
 
             }
+        }
+
+        try {
+            minie_app_client.init(this);
+            minie_app_client client = new minie_app_client("172.16.1.5", 55001);
+
+            int cr = client.Login("test", "test");
+            if (cr != 0) {
+                Log.d(TAG, "Login Failed" + cr);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
     @Override

@@ -1,1 +1,1 @@
-include ':app', ':daemon', ':aidl'
+include ':app', ':daemon', ':aidl', ':irpc', ':irpc'
